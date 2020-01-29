@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    {% for post in posts %}
+
+        <div class="container" style="padding-top:5px;">
+            <div class="row">
+                <div class="col-xs-6">
+                    <a href="#">{{post.name}}</a>
+                    <p>{{ post.text[:50] }}...<a href="#">read more</a></p>
+                    <span class="badge badge-success">{{ post.tags }}</span>
+                        <p>{{ post.date }}</p>
+                </div>
+                <div class="col-xs-6">
+                     <img src="{{ post.image }}" class="img-thumbnail">
+                </div>
+            </div>
+            <hr>
+            <!--<div class="container" *ngIf="postSelected">
+                        <h1>{{post.name}}</h1>
+                        <span class="badge badge-success">{{post.tags}}</span>
+                        <h3>{{post.date}}</h3>
+                        <img src="{{post.image}}" class="img-thumbnail">
+                        <p>{{post.text}}</p>
+                        <div class="col-xs-6">
+                        </div>
+                        <hr>
+                    </div>-->
+        </div>
+
+    {% endfor %}
+
+{% endblock body %}

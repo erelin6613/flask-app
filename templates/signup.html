@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    	<div class="container" id="signup">
+    		<form method="POST">
+    			<legend>Add your data</legend>
+    			{{ form.hidden_tag() }}
+    			<fieldset class="form-group">
+
+    				<div class="row">
+
+    					<div class="col-xs-6 form-group">
+	    					<label>
+	    						{{ form.first_name.label(class="form-control-label") }}
+	    					</label>
+	    				</div>
+
+	    				<div class="col-xs-6 form-group">
+	    					{{ form.first_name(class="form-control-label") }}
+						</div>
+
+					</div>
+
+
+					<div class="row" formGroupName="FLnames">
+
+    					<div class="col-xs-6 form-group">
+	    					<label>
+	    						{{ form.first_name.label(class="form-control-label") }}
+	    					</label>
+	    				</div>
+
+	    				<div class="col-xs-6 form-group">
+	    					{{ form.first_name(class="form-control-label") }}
+						</div>
+
+					</div>
+
+					<div class="row" formGroupName="contacts">
+
+    					<div class="col-xs-6 form-group">
+	    					<label>
+	    						{{ form.first_name.label(class="form-control-label") }}
+	    					</label>
+	    				</div>
+
+	    				<div class="col-xs-6 form-group">
+	    					{{ form.first_name(class="form-control-label") }}
+						</div>
+
+					</div>
+
+					<div class="row" formGroupName="contacts">
+
+    					<div class="col-xs-6 form-group">
+	    					<label>
+	    						{{ form.first_name.label(class="form-control-label") }}
+	    					</label>
+	    				</div>
+
+	    				<div class="col-xs-6 form-group">
+	    					{{ form.first_name(class="form-control-label") }}
+						</div>
+
+				</div>
+
+				<div class="row" formGroupName="password">
+					<div class="col-xs-6 form-group">
+    					<div class="col-xs-6 form-group">
+	    					<label>
+	    						{{ form.first_name.label(class="form-control-label") }}
+	    					</label>
+	    				</div>
+
+	    				<div class="col-xs-6 form-group">
+	    					{{ form.first_name(class="form-control-label") }}
+						</div>
+					</div>
+					<div class="col-xs-6 form-group">
+    					<div class="col-xs-6 form-group">
+	    					<label>
+	    						{{ form.first_name.label(class="form-control-label") }}
+	    					</label>
+	    				</div>
+
+	    				<div class="col-xs-6 form-group">
+	    					{{ form.first_name(class="form-control-label") }}
+						</div>
+					</div>
+
+				<div class="row">
+				</div>
+				</div>
+
+				<button [disabled]="!signupForm_1_4.valid" type="submit">Next</button>
+			</form>
+		</div>
+
+{% endblock body %}
