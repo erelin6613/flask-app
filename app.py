@@ -1,5 +1,5 @@
-from flask import Flask, render_template, url_for, request, redirect
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, url_for, request, redirect, flash
+#from flasksqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
 
@@ -24,6 +24,8 @@ def index():
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
 	form = SignupForm()
+	if form.validate_on_submit():
+		flash('First step is finished!', 'success')
 	return render_template('signup.html', title='Sign Up', form=form)
 
 @app.route('/login', methods=['POST', 'GET'])

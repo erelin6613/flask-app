@@ -11,7 +11,7 @@ class SignupForm(FlaskForm):
 							validators=[DataRequired(), 
 										Length(min=2, max=40)])
 
-	last_name = StringField('First Name', 
+	last_name = StringField('Last Name', 
 							validators=[DataRequired(), 
 										Length(min=2, max=40)])
 
