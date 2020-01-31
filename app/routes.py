@@ -3,10 +3,14 @@ from app.forms import SignupForm, LoginForm
 from app.models import User
 from app import app
 import json
+import requests
+
+database = 'https://raw.githubusercontent.com/erelin6613/flask-app/master/app/database.json'
+
+r = requests.get(database)
 
 name = 'HireRush'
-with open('/home/val/Downloads/flask-app/app/database.json') as file:
-	posts = json.loads(file.read())
+posts = json.loads(r.text)
 
 posts=posts['posts']
 
