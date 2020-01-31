@@ -15,6 +15,7 @@
     </head>
 
     <body>
+
         <nav class="navbar navbar-light bg-light navbar-fixed-bottom">
             <div class="container">
                 <div class="row">
@@ -34,8 +35,30 @@
             </div>
         </nav>
         <div class="container">
-            {% block body %}{% endblock body%}
-        </div>
+
+            {% if beta %}
+            <div class="alert alert-success">
+                This application is under the development. Please visit
+                <a href="https://www.hirerush.com/"> stable website</a> for full functionality.
+            </div>
+            {% endif %}
+
+
+            <div class="row">
+                <div class="col-xs-4">
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                      {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                          {{ message }}
+                        </div>
+                      {% endfor %}
+                    {% endif %}
+                  {% endwith %}
+                </div>
+            </div>
+                {% block body %}{% endblock body%}
+            </div>
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

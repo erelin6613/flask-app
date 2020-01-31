@@ -1,9 +1,28 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.widgets import Select
+from app.models import User
+import re
 
 class SignupForm(FlaskForm):
+
+
+	def check_phone(self, phone):
+		if not re.search(r'.*[0-9]{3}\D?[0-9]{3}\D?[0-9]{4}\D?', str(phone)):
+			raise ValidationError('Invalid phone number')
+
+	def check_email_exists(self, email):
+		user = User.query.filter_by(email=email.data).first()
+
+		if user:
+			raise  ValidationError('The email is already signed up.')
+
+	def check_phone_exists(self, phone):
+		user = User.query.filter_by(phone=phone.data).first()
+
+		if user:
+			raise  ValidationError('The phone is already signed up.')
 
 	roles = ['Owner', 'CEO', 'Representative']
 
@@ -15,13 +34,13 @@ class SignupForm(FlaskForm):
 							validators=[DataRequired(), 
 										Length(min=2, max=40)])
 
-	email = StringField('Email', validators=[DataRequired(), Email()])
+	email = StringField('Email', validators=[DataRequired(), Email(), check_email_exists])
 
-	phone = StringField('Phone', validators=[DataRequired()])
+	phone = StringField('Phone', validators=[DataRequired(), check_phone, check_phone_exists])
 
 	password = PasswordField('Password', validators=[DataRequired()])
 
-	conf_pass = PasswordField('Confoirm Password', 
+	conf_pass = PasswordField('Confirm Password', 
 								validators=[DataRequired(), 
 											EqualTo('password')])
 
@@ -29,9 +48,6 @@ class SignupForm(FlaskForm):
 
 	submit_step_1 = SubmitField('Next')
 
-	def check_phone(form, field):
-		if not re.search(r'.*[0-9]{3}\D?[0-9]{3}\D?[0-9]{4}\D?'):
-			raise ValidationError('Invalid phone number')
 
 
 
