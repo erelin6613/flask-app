@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    {% for post in posts %}
+
+        <div class="container" style="padding-top:5px;">
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <img src="{{ post.image }}" class="img-thumbnail" style="max-width: 40%;">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div>
+                        <a href="#">{{post.name}}</a>
+                        <p>{{ post.text[:50] }}...<a href="#">read more</a></p>
+
+                        {% for tag in post.tags%}
+                            <span class="badge badge-success">{{ tag }}</span>
+                        {% endfor %}
+                        <p><small>{{ post.date }}</small></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+
+    {% endfor %}
+
+{% endblock body %}

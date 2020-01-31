@@ -1,17 +1,11 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
-#from flasksqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask import render_template, url_for, request, redirect, flash
+from app.forms import SignupForm, LoginForm
+from app.models import User
+from app import app
 import json
 
-from forms import SignupForm, LoginForm
-
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '357d8ecf84df959408e2ab4a5cd3c453'
-
 name = 'HireRush'
-with open('database.json') as file:
+with open('/home/val/Downloads/flask-app/app/database.json') as file:
 	posts = json.loads(file.read())
 
 posts=posts['posts']
@@ -35,8 +29,5 @@ def login():
 
 @app.route('/blog')
 def blog():
-	return render_template('blog.html', title='Blog', posts=posts)
-
-if __name__ == '__main__':
-	app.run(debug=True)
+	return render_template('blog.html', title='Blog', posts=posts[:10])
 

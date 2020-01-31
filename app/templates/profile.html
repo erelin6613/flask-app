@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="content-section ml-4">
+        <div class="row">
+            <div class="content-section col-xs-6">
+                <img src={{ User.picture }}>
+            </div>
+             <div class="content-section col-xs-6">
+                <p class="lead"> {{ User.first_name User.last_name }}</p>
+            </div>
+    </div>
+
+
+    </div>
+{% endblock body %}
