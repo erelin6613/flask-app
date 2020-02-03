@@ -3,13 +3,76 @@
     <div class="content-section ml-4">
         <div class="row">
             <div class="content-section col-xs-6">
-                <img src={{ User.picture }}>
+                <img src={{ current_user.picture }}>
             </div>
              <div class="content-section col-xs-6">
-                <p class="lead"> {{ User.first_name User.last_name }}</p>
+                <p class="lead"> {{ current_user.first_name}} {{current_user.last_name }}</p>
+                <p class="lead"> {{ current_user.phone }}</p>
+                <div class="content-section col-xs-6">
+                    <a class="btn btn-outline-success mr-4">Request a qoute</a>
+                    <a class="btn btn-outline-success ml-4">Send a message</a>
+                </div>
             </div>
     </div>
-
+    <div class="content-section ml-4">
+        <div class="row">
+            <div class="content-section col-xs-6">
+                <a class="btn btn-outline-success ml-4" href="{{ url_for('edit') }}">Edit profile</a>
+            </div>
+        </div>
+    </div>
+    {% if edit_mode %}
+        <div class="content-section col-xs-6">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Edit Profile Info</legend>
+                <div class="col-xs-6 ml-4 mr-4">
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-sm") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.phone.label(class="form-control-label") }}
+                        {% if form.phone.errors %}
+                            {{ form.phone(class="form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.phone.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.phone(class="form-control form-control-sm") }}
+                        {% endif %}
+                    </div> 
+                </div>
+                <div class="col-xs-6 ml-4 mr-4">
+                    <div class="form-group">
+                        {{ form.picture.label() }}
+                        {{ form.picture(class="form-control-file") }}
+                        {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                                <span class="text-danger">{{ error }}</span></br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-success") }}
+            </div>
+        </form>
+    {% endif %}
+        </div>
 
     </div>
 {% endblock body %}

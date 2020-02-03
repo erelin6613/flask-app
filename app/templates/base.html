@@ -16,7 +16,7 @@
 
     <body>
 
-        <nav class="navbar navbar-light bg-light navbar-fixed-bottom">
+        <nav class="navbar navbar-light bg-light sticky-top">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-3">
@@ -31,6 +31,21 @@
                     <div class="col-xs-3">
                         <a class="btn btn-block" href="{{ url_for('login') }}">Inbox</a>
                     </div>
+                    {% if current_user.is_authenticated %}
+                        <div class="col-xs-3">
+                            <a class="btn btn-block" href="{{ url_for('profile') }}">Profile</a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a class="btn btn-block" href="{{ url_for('logout') }}">Logout</a>
+                        </div>                        
+                    {% else %}
+                        <div class="col-xs-3">
+                            <a class="btn btn-block" href="{{ url_for('login') }}">Log in</a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a class="btn btn-block" href="{{ url_for('signup') }}">Sign up</a>
+                        </div>
+                    {% endif %}               
                 </div>
             </div>
         </nav>
@@ -40,6 +55,7 @@
             <div class="alert alert-success">
                 This application is under the development. Please visit
                 <a href="https://www.hirerush.com/"> stable website</a> for full functionality.
+                The code for project can be found at <a href="https://github.com/erelin6613/flask-app"> this repo</a>.
             </div>
             {% endif %}
 
