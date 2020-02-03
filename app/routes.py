@@ -20,10 +20,9 @@ posts=posts['posts']
 
 def upload_picture(form_picture):
 
-"""
-This one function seems to work as expected, further in update functionality
-app fails to render an uploaded picture. This option requires fixing.
-"""
+# This one function seems to work as expected, further in update functionality
+# app fails to render an uploaded picture. This option requires fixing.
+
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
