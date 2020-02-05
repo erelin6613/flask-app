@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.widgets import Select
 from flask_wtf.file import FileField, FileAllowed
@@ -76,4 +76,32 @@ class EditProfileForm(FlaskForm):
 	phone = StringField('Phone', validators=[DataRequired(), check_phone])
 	picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
 	submit = SubmitField('Edit')
+
+
+class ServiceRequestForm(FlaskForm):
+
+	def check_phone(self, phone):
+		if not re.search(r'.*[0-9]{3}\D?[0-9]{3}\D?[0-9]{4}\D?', str(phone)):
+			raise ValidationError('Invalid phone number')
+
+	def check_email_exists(self, email):
+		user = User.query.filter_by(email=email.data).first()
+
+		if user:
+			raise  ValidationError('The email is already signed up.')
+
+	def check_phone_exists(self, phone):
+		user = User.query.filter_by(phone=phone.data).first()
+
+	service = StringField('What service do you need?', validators=[DataRequired()])
+	add_info = TextAreaField('Tell us some details')
+	email = StringField('Email', validators=[DataRequired(), Email()])
+	phone = StringField('Phone', validators=[DataRequired(), check_phone])
+	first_name = StringField('First Name', 
+							validators=[DataRequired(), 
+										Length(min=2, max=40)])
+	last_name = StringField('Last Name', 
+							validators=[DataRequired(), 
+										Length(min=2, max=40)])
+	submit = SubmitField('Find pros')
 

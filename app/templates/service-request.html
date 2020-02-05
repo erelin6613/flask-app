@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="content-section ml-4">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">What service do you need?</legend>
+
+                <div class="row">
+                	<div class="col-xs-6 ml-4 mr-4">
+                        <div class="form-group">
+                        	{{ form.service.label(class="form-control-label") }}
+                            {% if form.service.errors %}
+                                {{ form.service(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.service.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.service(class="form-control form-control-sm") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                	<div class="col-xs-6 ml-4 mr-4">
+                        <div class="form-group">
+                        	{{ form.add_info.label(class="form-control-label") }}
+                            {% if form.add_info.errors %}
+                                {{ form.add_info(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.add_info.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.add_info(class="form-control form-control-sm") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                	<div class="col-xs-6 ml-4 mr-4">
+                        <div class="form-group">
+                        	{{ form.first_name.label(class="form-control-label") }}
+                            {% if form.first_name.errors %}
+                                {{ form.first_name(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.first_name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.first_name(class="form-control form-control-sm") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 ml-4 mr-4">
+                        <div class="form-group">
+                        	{{ form.last_name.label(class="form-control-label") }}
+                            {% if form.last_name.errors %}
+                                {{ form.last_name(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.last_name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.last_name(class="form-control form-control-sm") }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                	<div class="col-xs-6 ml-4 mr-4">
+                        <div class="form-group">
+                        	{{ form.email.label(class="form-control-label") }}
+                            {% if form.email.errors %}
+                                {{ form.email(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.email(class="form-control form-control-sm") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 ml-4 mr-4">
+                        <div class="form-group">
+                        	{{ form.phone.label(class="form-control-label") }}
+                            {% if form.phone.errors %}
+                                {{ form.phone(class="form-control form-control-sm is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.phone.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.phone(class="form-control form-control-sm") }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-success") }}
+            </div>
+        </form>
+    </div>
+
+	
+
+{% endblock body %}
