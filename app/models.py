@@ -2,6 +2,7 @@ from app import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
 from secrets import token_bytes
+from datetime import datetime
 #from flask.ext.mongoalchemy import BaseQuery
 
 @login_manager.user_loader
@@ -72,7 +73,6 @@ class Requestor(User):
 
 
 
-
 class ServiceRequest(db.Model, UserMixin):
 
 	id = db.Column(db.Integer, primary_key=True)
@@ -82,6 +82,11 @@ class ServiceRequest(db.Model, UserMixin):
 	last_name = db.Column(db.String(), nullable=False)
 	email = db.Column(db.String(), nullable=False)
 	phone = db.Column(db.String(), nullable=False)
+	creation_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+	def __repr__(self):
+		return f'ServiceRequest("{self.service}", "{self.first_name}",\
+				"{self.last_name}", "{self.phone}")'
 
 
 

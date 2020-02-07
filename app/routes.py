@@ -152,17 +152,13 @@ def service_request():
     return render_template('service-request.html', title='Find Pros', form=form, beta=beta)
 
 
-"""
-@app.route('/blog/<slug>')
-def blog(slug):
-	#post = posts
-	for post in posts:
-		if post.slug == slug:
-			return render_template('blog-post.html', title=post.name, post=post)
-		else:
-			post = None
 
-	if post == None:
-		flash('Oops, an error occured.')
+@app.route('/leads')
+def leads():
+    leads = ServiceRequest.query.order_by(ServiceRequest.creation_time.desc()).paginate(per_page=5)
+    return render_template('leads.html', leads=leads)
 
-"""
+@app.route('/lead/<int:lead_id>', methods=['GET', 'PUT'])
+def lead(lead_id):
+    lead = ServiceRequest.query.get_or_404(lead_id)
+    return render_template('lead.html', lead=lead)
