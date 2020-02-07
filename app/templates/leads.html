@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    {% for lead in leads.items %}
+
+        <div class="container" style="padding-top:5px;">
+
+            <div class="row">
+                <div class="alert alert-success">
+                    <a class="m-1" href="{{ url_for('lead', lead_id=lead.id) }}">{{ lead.service }} request from {{ lead.first_name }} {{ lead.last_name }}</a><br>
+                    <a class="btn btn-outline-success m-1" href="{{ url_for('lead', lead_id=lead.id) }}">Get more details</a>
+                    <span><p>{{ lead.creation_time }}</p></span>
+                </div>
+            </div>
+
+
+        </div>
+        <hr>
+
+    {% endfor %}
+
+{% endblock body %}

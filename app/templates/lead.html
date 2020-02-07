@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+        
+    <div class="container" style="padding-top:5px;">
+
+        <div class="row">
+            <div class="alert alert-success">
+                <h2 class="m-1">{{ lead.service }} request from {{ lead.first_name }} {{ lead.last_name }}</h2>
+                <p>{{ lead.add_info }}</p>
+                <span><p>{{ lead.creation_time }}</p></span>
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock body %}

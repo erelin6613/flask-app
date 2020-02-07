@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from wtforms.widgets import Select
 from flask_wtf.file import FileField, FileAllowed
 from app.models import User
+from app import mongo
 import re
 
 class SignupForm(FlaskForm):
@@ -14,13 +15,13 @@ class SignupForm(FlaskForm):
 			raise ValidationError('Invalid phone number')
 
 	def check_email_exists(self, email):
-		user = User.query.filter_by(email=email.data).first()
+		user = mongo.db.hirerush.users.find_one({"email": form.email.data})
 
 		if user:
 			raise  ValidationError('The email is already signed up.')
 
 	def check_phone_exists(self, phone):
-		user = User.query.filter_by(phone=phone.data).first()
+		user = mongo.db.hirerush.users.find_one({"phone": phone.data})
 
 		if user:
 			raise  ValidationError('The phone is already signed up.')
@@ -61,13 +62,13 @@ class EditProfileForm(FlaskForm):
 			raise ValidationError('Invalid phone number')
 
 	def check_email_exists(self, email):
-		user = User.query.filter_by(email=email.data).first()
+		user = mongo.db.hirerush.users.find_one({"email": form.email.data})
 
 		if user:
 			raise  ValidationError('The email is already signed up.')
 
 	def check_phone_exists(self, phone):
-		user = User.query.filter_by(phone=phone.data).first()
+		user = mongo.db.hirerush.users.find_one({"phone": phone.data})
 
 		if user:
 			raise  ValidationError('The phone is already signed up.')
@@ -85,13 +86,13 @@ class ServiceRequestForm(FlaskForm):
 			raise ValidationError('Invalid phone number')
 
 	def check_email_exists(self, email):
-		user = User.query.filter_by(email=email.data).first()
+		user = mongo.db.hirerush.users.find_one({"email": form.email.data})
 
 		if user:
 			raise  ValidationError('The email is already signed up.')
 
 	def check_phone_exists(self, phone):
-		user = User.query.filter_by(phone=phone.data).first()
+		user = mongo.db.hirerush.users.find_one({"phone": phone.data})
 
 	service = StringField('What service do you need?', validators=[DataRequired()])
 	add_info = TextAreaField('Tell us some details')

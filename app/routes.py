@@ -1,15 +1,15 @@
-from flask import render_template, url_for, request, redirect, flash, abort
+from flask import render_template, url_for, request, redirect, flash, abort, Blueprint
 from app.forms import SignupForm, LoginForm, EditProfileForm, ServiceRequestForm
 from app.models import User, ServiceRequest
 from PIL import Image
-from app import app, db, bcrypt
+from app import app, mongo, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-#from flask.ext import UploadSet
 import json
 import requests
 import secrets
 import os
 
+routes = Blueprint('routes', __name__) 
 database = 'https://raw.githubusercontent.com/erelin6613/flask-app/master/app/database.json'
 #pictures = UploadSet('profile_pictures', IMAGES)
 
@@ -44,12 +44,12 @@ beta = True
 @app.route('/')
 @app.route('/index')
 def index():
-	#beta=True
+	flash(mongo)
 	return render_template('index.html', name=name, beta=beta)
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    form = SignupForm()
+    form = request.form
     if form.validate_on_submit():
         hashed_pass = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         rand_id = int.from_bytes(os.getrandom(8), 'big')
@@ -67,7 +67,7 @@ def login():
     	return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-    	user = User.query.filter_by(email=form.email.data).first()
+    	user = mongo.db.hirerush.users.find_one({"email": form.email.data})
     	if user and bcrypt.check_password_hash(user.password, form.password.data):
     		login_user(user, remember=form.remember.data)
     		next_page = request.args.get('next')
@@ -92,7 +92,7 @@ def profile():
 @login_required
 def edit():
 
-    form = EditProfileForm()
+    form = request.form
     if form.validate_on_submit():
         if form.picture.data:
             # for now the problem with image is solved with hard coding the path, 
@@ -125,7 +125,7 @@ def blog():
 @app.route('/service-request', methods=['GET', 'POST'])
 def service_request():
 
-    form = ServiceRequestForm()
+    form = request.form
     try:
         form.phone.data = current_user.phone
         form.email.data = current_user.email
@@ -138,7 +138,7 @@ def service_request():
                                             first_name=form.first_name.data, last_name=form.last_name.data,
                                             email=form.email.data, phone=form.phone.data)
         db.session.add(service_request)
-        if not User.query.filter_by(email=form.email.data):
+        if not User.query.filter(email=form.email.data):
             rand_id = int.from_bytes(os.getrandom(8), 'big')
             rand_pass = int.from_bytes(os.getrandom(16), 'big')
             hashed_pass = bcrypt.generate_password_hash(rand_pass).decode('utf-8')
@@ -152,17 +152,13 @@ def service_request():
     return render_template('service-request.html', title='Find Pros', form=form, beta=beta)
 
 
-"""
-@app.route('/blog/<slug>')
-def blog(slug):
-	#post = posts
-	for post in posts:
-		if post.slug == slug:
-			return render_template('blog-post.html', title=post.name, post=post)
-		else:
-			post = None
 
-	if post == None:
-		flash('Oops, an error occured.')
+@app.route('/leads')
+def leads():
+    leads = mongo.db.hirerush.ServiceRequest.find()
+    return render_template('leads.html', leads=leads)
 
-"""
+@app.route('/lead/<int:lead_id>', methods=['GET', 'PUT'])
+def lead(lead_id):
+    lead = mongo.db.hirerush.ServiceRequest.find_one({"_id": lead_id})
+    return render_template('lead.html', lead=lead)
